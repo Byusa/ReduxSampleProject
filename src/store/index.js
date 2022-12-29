@@ -1,55 +1,18 @@
 // Create  a redux store
-import { createSlice, configureStore } from '@reduxjs/toolkit'
-
-// slice 1
-const initialCounterState = { counter : 0 , showCounter: true };
-// createSlice, will clone the existing state and overwrite it for you 
-const counterSlice = createSlice ({
-    name: 'counter',
-    initialState: initialCounterState,
-    reducers: {
-        increment(state) {
-            state.counter++;
-        },
-        decrement(state) {
-            state.counter--;
-        },
-        increase(state, action) {
-            state.counter = state.counter + action.payload
-        },
-        toggleCounter(state){
-            state.showCounter = !state.showCounter
-        }
-    }
-})
-
-// slice 2
-const initialAuthState = { isAuthenticated : false }
-const authSlice = createSlice({
-    name: 'authentication',
-    initialState: initialAuthState, 
-    reducers: {
-        login(state) {
-            state.isAuthenticated = true
-        },
-        logout(state) {
-            state.isAuthenticated = false
-        }
-    }
-})
+import { configureStore } from '@reduxjs/toolkit'
+import counterReducer from './counter'
+import authReducer from './auth'
 
 // store
 const store = configureStore({
-    // reducer: counterSlice.reducer, 
+    // reducer: counterSlice.reducer, // one reducer
     reducer: {
-            counter: counterSlice.reducer, 
-            auth: authSlice.reducer
-    },
+            counter: counterReducer, 
+            auth: authReducer
+    }, // multiple reducers
     
     // reducer: { counter: counterSlice.reducer }
 })
-export const counterActions = counterSlice.actions;
-export const authActions = authSlice.actions;
 
 export default store
 
